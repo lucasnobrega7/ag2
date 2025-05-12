@@ -1,57 +1,48 @@
 #!/bin/bash
 
-# Script para instruções de deploy via Railway API
-# Como estamos enfrentando limitações com comandos interativos
+# Script para deploy direto no Railway usando curl
+# Uso: RAILWAY_TOKEN=seu_token ./railway-deploy-curl.sh
 
-echo "==== INSTRUÇÕES PARA DEPLOY MANUAL NO RAILWAY ===="
-echo ""
-echo "O repositório GitHub foi criado com sucesso:"
-echo "https://github.com/lucasnobrega7/agentes-de-conversao-site"
-echo ""
-echo "Para completar o deploy, siga estas etapas:"
+# Cores para melhor visualização
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
-echo ""
-echo "1. Acesse o dashboard do Railway:"
-echo "   https://railway.app/dashboard"
-echo ""
+echo -e "${YELLOW}=== INICIANDO DEPLOY PARA RAILWAY USANDO API DIRETA ===${NC}"
 
-echo "2. Selecione o projeto 'Agentes de Conversão'"
-echo ""
+# Verificar se o token foi fornecido
+if [ -z "$RAILWAY_TOKEN" ]; then
+    echo -e "${RED}Erro: RAILWAY_TOKEN não definido.${NC}"
+    echo -e "Execute com: RAILWAY_TOKEN=seu_token $0"
+    exit 1
+fi
 
-echo "3. Clique em 'New Service' e selecione 'GitHub Repo'"
-echo "   - Selecione o repositório: lucasnobrega7/agentes-de-conversao-site"
-echo "   - Branch: main"
-echo "   - Root Directory: / (vazio)"
-echo ""
+# Informações do projeto
+PROJECT_ID=${PROJECT_ID:-"agentes-conversao"}
+ENVIRONMENT=${ENVIRONMENT:-"production"}
+SERVICE_ID=${SERVICE_ID:-"agentes-conversao"}
 
-echo "4. Após a criação do serviço, configure as variáveis de ambiente:"
-echo "   - NODE_ENV = production"
-echo "   - NEXT_PUBLIC_SITE_URL = https://agentesdeconversao.com.br"
-echo ""
+# Preparar para o deploy
+echo -e "${YELLOW}Verificando recursos críticos para produção...${NC}"
+node scripts/production-check.js || exit 1
 
-echo "5. Configure um domínio na aba 'Settings > Domains':"
-echo "   - Clique em 'Generate Domain' ou configure um domínio personalizado"
-echo ""
+# Gerar CSS
+echo -e "${YELLOW}Gerando CSS...${NC}"
+npx tailwindcss -i ./styles/globals.css -o ./styles/output.css
 
-echo "6. O deploy acontecerá automaticamente. Você pode acompanhar o progresso"
-echo "   na aba 'Deployments' do serviço."
-echo ""
+# Build do projeto
+echo -e "${YELLOW}Executando build...${NC}"
+NEXT_TELEMETRY_DISABLED=1 npx next build
 
-echo "Para referência futura, você pode consultar os arquivos de documentação:"
-echo "- MANUAL-DEPLOY-STEPS.md - Instruções detalhadas para deploy manual"
-echo "- GITHUB-SETUP.md - Guia para configuração e deploy via GitHub"
-echo ""
+echo -e "${GREEN}Build concluído com sucesso.${NC}"
 
-echo "==== COMANDOS ÚTEIS PARA GERENCIAMENTO FUTURO ===="
-echo ""
+# Deploy usando o CLI do Railway com token
+echo -e "${YELLOW}Iniciando deploy no Railway...${NC}"
+RAILWAY_TOKEN="$RAILWAY_TOKEN" railway up
 
-echo "# Para verificar o status do projeto"
-echo "railway status"
-echo ""
+echo -e "${GREEN}Comando de deploy executado com sucesso!${NC}"
+echo -e "${YELLOW}Verifique o status do deploy em:${NC}"
+echo -e "https://railway.app/project/$PROJECT_ID/services"
 
-echo "# Para ver as variáveis de ambiente"
-echo "railway variables"
-echo ""
-
-echo "# Para ver os logs do deploy"
-echo "railway logs"
+echo -e "${GREEN}=== PROCESSO FINALIZADO ===${NC}"
