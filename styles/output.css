@@ -124,6 +124,10 @@
 .text-transparent {
   color: transparent;
 }
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .opacity-70 {
   opacity: 70%;
 }

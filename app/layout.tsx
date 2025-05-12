@@ -1,6 +1,10 @@
+// Estilos aplicados explicitamente na ordem correta para evitar problemas
 import '../styles/globals.css'
 import '../styles/output.css'
+
+// Importações de tipos do Next.js
 import type { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Agentes de Conversão | Plataforma',
@@ -59,12 +63,19 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
+        <link
+          rel="preload"
+          href="/fonts/soehne-web-kraftig.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="bg-background text-foreground font-sans lang-pt-br">
-        <div id="root">
+      <body className="bg-background text-foreground font-sans antialiased">
+        <Suspense fallback={<div>Carregando...</div>}>
           {children}
-        </div>
+        </Suspense>
       </body>
     </html>
   )
