@@ -8,31 +8,31 @@ const fontMapping = [
   {
     source: 'TestSöhne-Buch.otf',
     destination: 'soehne-web-buch.woff2',
-    weight: 400
+    weight: 400,
   },
   {
     source: 'TestSöhne-Kräftig.otf',
     destination: 'soehne-web-kraftig.woff2',
-    weight: 500
+    weight: 500,
   },
   {
     source: 'TestSöhne-Halbfett.otf',
     destination: 'soehne-web-halbfett.woff2',
-    weight: 600
-  }
+    weight: 600,
+  },
 ];
 
 // Verifique se as ferramentas necessárias estão instaladas
 try {
-  console.log("Verificando se fonttools está instalado...");
+  console.log('Verificando se fonttools está instalado...');
 
   // Tenta executar fonttools para ver se está instalado
   try {
     execSync('which fonttools');
-    console.log("✅ fonttools está instalado.");
+    console.log('✅ fonttools está instalado.');
   } catch (e) {
-    console.log("❌ fonttools não encontrado. Você precisa instalá-lo com:");
-    console.log("   pip install fonttools brotli");
+    console.log('❌ fonttools não encontrado. Você precisa instalá-lo com:');
+    console.log('   pip install fonttools brotli');
     process.exit(1);
   }
 
@@ -46,7 +46,7 @@ try {
     process.exit(1);
   }
 
-  console.log("🔄 Convertendo fontes...");
+  console.log('🔄 Convertendo fontes...');
 
   // Processa cada fonte
   for (const font of fontMapping) {
@@ -69,10 +69,9 @@ try {
     }
   }
 
-  console.log("\n✅ Processo de conversão de fontes concluído!");
-  console.log("As fontes estão prontas para o deploy.\n");
-
+  console.log('\n✅ Processo de conversão de fontes concluído!');
+  console.log('As fontes estão prontas para o deploy.\n');
 } catch (error) {
-  console.error("❌ Erro durante o processo:", error.message);
+  console.error('❌ Erro durante o processo:', error.message);
   process.exit(1);
 }

@@ -34,6 +34,6 @@ const nextConfig = {
     serverComponentsExternalPackages: [],
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

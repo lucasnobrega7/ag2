@@ -1,11 +1,11 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 /**
  * Combina classes do Tailwind com clsx para uma melhor organização
  */
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 /**
@@ -15,7 +15,7 @@ export function formatCurrency(value: number): string {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
-  }).format(value)
+  }).format(value);
 }
 
 /**
@@ -26,20 +26,20 @@ export function formatDate(date: Date): string {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).format(date)
+  }).format(date);
 }
 
 /**
  * Limita um texto a um número específico de caracteres
  */
 export function truncateText(text: string, maxLength: number): string {
-  if (text.length <= maxLength) return text
-  return text.slice(0, maxLength).trim() + '...'
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength).trim() + '...';
 }
 
 /**
  * Delay assincrono para demonstrações
  */
 export function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms))
+  return new Promise(resolve => setTimeout(resolve, ms));
 }

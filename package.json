@@ -13,7 +13,15 @@
     "css": "tailwindcss -i ./styles/globals.css -o ./styles/output.css",
     "css:watch": "tailwindcss -i ./styles/globals.css -o ./styles/output.css --watch",
     "fonts:convert": "node convert-fonts.js",
-    "fonts:check": "node -e \"const fs=require('fs'); const path=require('path'); const files=['soehne-web-buch.woff2','soehne-web-kraftig.woff2','soehne-web-halbfett.woff2']; const dir=path.join(__dirname,'public','fonts'); let missing=false; files.forEach(f=>{if(!fs.existsSync(path.join(dir,f))){console.log('\\x1b[31m⚠️ Font file missing: '+f+'\\x1b[0m');missing=true;}}); if(missing){console.log('\\x1b[33m⚠️ Some required font files are missing. Please run: npm run fonts:convert\\x1b[0m');}else{console.log('\\x1b[32m✅ All font files present\\x1b[0m');}\""
+    "fonts:check": "node -e \"const fs=require('fs'); const path=require('path'); const files=['soehne-web-buch.woff2','soehne-web-kraftig.woff2','soehne-web-halbfett.woff2']; const dir=path.join(__dirname,'public','fonts'); let missing=false; files.forEach(f=>{if(!fs.existsSync(path.join(dir,f))){console.log('\\x1b[31m⚠️ Font file missing: '+f+'\\x1b[0m');missing=true;}}); if(missing){console.log('\\x1b[33m⚠️ Some required font files are missing. Please run: npm run fonts:convert\\x1b[0m');}else{console.log('\\x1b[32m✅ All font files present\\x1b[0m');}\"",
+    "check:a11y": "node scripts/check-a11y.js",
+    "check:responsive": "node scripts/check-responsive.js",
+    "check:lighthouse": "node scripts/check-lighthouse.js",
+    "check:all": "npm run lint && npm run check:a11y && npm run check:responsive && npm run check:lighthouse",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
+    "pre-deploy": "npm run check:all",
+    "deploy:railway": "./scripts/prepare-railway-deploy.sh",
+    "check:production": "node scripts/production-check.js"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.6",
@@ -28,14 +36,19 @@
     "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
+    "@axe-core/react": "^4.10.1",
     "@types/node": "^20.11.27",
     "@types/react": "^18.3.21",
     "@types/react-dom": "^18.3.7",
     "autoprefixer": "^10.4.16",
+    "chrome-launcher": "^1.2.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.28",
     "eslint-plugin-markdown": "^5.1.0",
+    "lighthouse-ci": "^1.13.1",
     "postcss": "^8.4.35",
+    "prettier": "^3.5.3",
+    "puppeteer": "^24.8.2",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.4.2"
   },
