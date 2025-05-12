@@ -6,7 +6,7 @@
     "dev": "next dev",
     "prebuild": "npm run css && npm run fonts:check",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "deploy": "./railway-deploy.sh",
     "setup": "./railway-setup.sh",
