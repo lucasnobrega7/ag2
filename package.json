@@ -4,13 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "npm run css && npm run fonts:check",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "deploy": "./railway-deploy.sh",
     "setup": "./railway-setup.sh",
     "css": "tailwindcss -i ./styles/globals.css -o ./styles/output.css",
-    "css:watch": "tailwindcss -i ./styles/globals.css -o ./styles/output.css --watch"
+    "css:watch": "tailwindcss -i ./styles/globals.css -o ./styles/output.css --watch",
+    "fonts:convert": "node convert-fonts.js",
+    "fonts:check": "node -e \"const fs=require('fs'); const path=require('path'); const files=['soehne-web-buch.woff2','soehne-web-kraftig.woff2','soehne-web-halbfett.woff2']; const dir=path.join(__dirname,'public','fonts'); let missing=false; files.forEach(f=>{if(!fs.existsSync(path.join(dir,f))){console.log('\\x1b[31m⚠️ Font file missing: '+f+'\\x1b[0m');missing=true;}}); if(missing){console.log('\\x1b[33m⚠️ Some required font files are missing. Please run: npm run fonts:convert\\x1b[0m');}else{console.log('\\x1b[32m✅ All font files present\\x1b[0m');}\""
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.6",
