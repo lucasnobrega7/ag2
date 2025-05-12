@@ -6,112 +6,217 @@
 @layer base {
   :root {
     /* Cores tema claro OpenAI */
-    --background: #ffffff;
-    --foreground: #202123;
-    --card: #f7f7f8;
-    --card-foreground: #202123;
-    --popover: #ffffff;
-    --popover-foreground: #202123;
-    --primary: #10a37f; /* Verde oficial OpenAI */
-    --primary-foreground: #ffffff;
-    --secondary: #f7f7f8; /* Cinza secundário oficial */
-    --secondary-foreground: #202123;
-    --muted: #f7f7f8;
-    --muted-foreground: #6e6e80;
-    --accent: #ececf1;
-    --accent-foreground: #0f172a;
-    --destructive: #ff4a4a;
-    --destructive-foreground: #ffffff;
-    --border: #e5e5e5; /* Borda oficial OpenAI */
-    --input: #e5e5e5;
-    --ring: #10a37f;
+    --background: 0 0% 100%;
+    --foreground: 215 9% 13%;
+    --card: 240 3% 97%;
+    --card-foreground: 215 9% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 9% 13%;
+    --primary: 162.5 84% 35%; /* Verde oficial OpenAI */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 3% 97%; /* Cinza secundário oficial */
+    --secondary-foreground: 215 9% 13%;
+    --muted: 240 3% 97%;
+    --muted-foreground: 240 5% 47%;
+    --accent: 240 5% 93%;
+    --accent-foreground: 222 84% 5%;
+    --destructive: 0 83% 64%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%; /* Borda oficial OpenAI */
+    --input: 0 0% 90%;
+    --ring: 162.5 84% 35%;
     --radius: 0.375rem;
   }
 
   .dark {
     /* Cores tema escuro OpenAI */
-    --background: #202123; /* Fundo escuro exato da OpenAI */
-    --foreground: #ffffff;
-    --card: #2a2b32; /* Cor de card oficial OpenAI */
-    --card-foreground: #ffffff;
-    --popover: #2a2b32;
-    --popover-foreground: #ffffff;
-    --primary: #10a37f; /* Verde oficial OpenAI */
-    --primary-foreground: #ffffff;
-    --secondary: #343541; /* Cor secundária oficial */
-    --secondary-foreground: #ffffff;
-    --muted: #343541;
-    --muted-foreground: #acacbe;
-    --accent: #343541;
-    --accent-foreground: #ffffff;
-    --destructive: #ff4a4a;
-    --destructive-foreground: #ffffff;
-    --border: #3e3f4b; /* Borda escura oficial */
-    --input: #3e3f4b;
-    --ring: #10a37f;
+    --background: 215 9% 13%; /* Fundo escuro exato da OpenAI */
+    --foreground: 0 0% 100%;
+    --card: 220 7% 18%; /* Cor de card oficial OpenAI */
+    --card-foreground: 0 0% 100%;
+    --popover: 220 7% 18%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 162.5 84% 35%; /* Verde oficial OpenAI */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 23%; /* Cor secundária oficial */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 5% 23%;
+    --muted-foreground: 240 5% 71%;
+    --accent: 240 5% 23%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 83% 64%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 10% 27%; /* Borda escura oficial */
+    --input: 215 10% 27%;
+    --ring: 162.5 84% 35%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
   /* Estilo de botões OpenAI */
   .btn-platform {
-    @apply rounded-md py-2.5 px-4 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+    border-radius: 0.375rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition-property: color, background-color, border-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
   }
-  
+
+  .btn-platform:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
   .btn-primary {
-    @apply btn-platform bg-primary text-white hover:bg-[#0e906f] focus-visible:outline-primary; /* Hover exato OpenAI */
+    composes: btn-platform;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
   }
-  
+
+  .btn-primary:hover {
+    background-color: #0e906f;
+  }
+
+  .btn-primary:focus-visible {
+    outline-color: hsl(var(--primary));
+  }
+
   .btn-secondary {
-    @apply btn-platform bg-secondary text-secondary-foreground hover:bg-[#e5e5e5] focus-visible:outline-secondary;
+    composes: btn-platform;
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
   }
-  
+
+  .btn-secondary:hover {
+    background-color: #e5e5e5;
+  }
+
+  .btn-secondary:focus-visible {
+    outline-color: hsl(var(--secondary));
+  }
+
   .btn-outline {
-    @apply btn-platform border border-input bg-transparent hover:bg-accent hover:text-accent-foreground;
+    composes: btn-platform;
+    border: 1px solid hsl(var(--input));
+    background-color: transparent;
+  }
+
+  .btn-outline:hover {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
   }
 }
 
 /* Container com largura máxima exata do OpenAI */
 .container-platform {
-  @apply max-w-[1200px] mx-auto px-4 md:px-6;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .container-platform {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 
 /* Espaçamento de seção */
 .section-platform {
-  @apply py-12 md:py-16 lg:py-24;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section-platform {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-platform {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
 }
 
 /* Tipografia ajustada para ser idêntica à OpenAI */
 .heading-platform {
-  @apply font-semibold tracking-tight text-foreground;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: hsl(var(--foreground));
 }
 
 .heading-hero {
-  @apply heading-platform text-4xl md:text-5xl lg:text-6xl leading-[1.2];
+  composes: heading-platform;
+  font-size: 2.25rem;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .heading-hero {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heading-hero {
+    font-size: 3.75rem;
+  }
 }
 
 .heading-section {
-  @apply heading-platform text-2xl md:text-3xl lg:text-4xl;
+  composes: heading-platform;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .heading-section {
+    font-size: 1.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heading-section {
+    font-size: 2.25rem;
+  }
 }
 
 .body-large {
-  @apply text-lg md:text-xl leading-relaxed;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+@media (min-width: 768px) {
+  .body-large {
+    font-size: 1.25rem;
+  }
 }
 
 .body-medium {
-  @apply text-base leading-normal;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .body-small {
-  @apply text-sm leading-normal;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 /* Animação para o cursor piscante no efeito de digitação */
@@ -155,38 +260,56 @@
 
 /* Estilos específicos do cabeçalho OpenAI */
 .header-platform {
-  @apply fixed top-0 w-full z-50 transition-all duration-300;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  transition-property: all;
+  transition-duration: 300ms;
   backdrop-filter: blur(8px);
 }
 
 .header-scrolled {
-  @apply bg-background/80 shadow-sm;
+  background-color: hsla(var(--background), 0.8);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .header-transparent {
-  @apply bg-transparent;
+  background-color: transparent;
 }
 
 /* Estilo de card exatamente igual ao OpenAI */
 .card-platform {
-  @apply bg-card rounded-lg border border-border overflow-hidden transition-shadow hover:shadow-md;
+  background-color: hsl(var(--card));
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-color: hsl(var(--border));
+  overflow: hidden;
+  transition-property: box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.card-platform:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Efeito de vidro para seções de destaque */
 .glass-effect {
-  @apply backdrop-blur-sm bg-background/70;
+  backdrop-filter: blur(4px);
+  background-color: hsla(var(--background), 0.7);
 }
 
 /* Gradiente de plano de fundo similar à OpenAI */
 .bg-gradient-platform {
-  background: radial-gradient(circle at top left, var(--primary)/5, transparent 50%),
-              radial-gradient(circle at bottom right, var(--secondary)/5, transparent 50%);
+  background: radial-gradient(circle at top left, hsla(var(--primary), 0.05), transparent 50%),
+              radial-gradient(circle at bottom right, hsla(var(--secondary), 0.05), transparent 50%);
 }
 
 /* Otimizações para mobile */
 @media (max-width: 640px) {
   .mobile-optimized-text {
-    @apply text-base;
+    font-size: 1rem;
   }
 }
 
@@ -206,14 +329,30 @@
 
 /* Links de navegação estilo OpenAI */
 .nav-link {
-  @apply text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
+  transition-property: color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: hsl(var(--foreground));
 }
 
 .nav-link-active {
-  @apply text-foreground;
+  color: hsl(var(--foreground));
 }
 
 .nav-link-active::after {
   content: '';
-  @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: hsl(var(--primary));
+  border-radius: 9999px;
 }
